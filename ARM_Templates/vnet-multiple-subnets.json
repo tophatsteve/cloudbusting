@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the vnet"
+            }            
+        },
+        "subnetCount": {
+            "type": "int",
+            "metadata": {
+                "description": "Number of subnets to create"
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2018-12-01",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2018-12-01",            
+            "name": "[concat(parameters('virtualNetworkName'), '/subnet-', copyIndex())]",
+            "DependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+            ],
+            "copy": {
+                "name": "subnets",
+                "count": "[parameters('subnetCount')]",
+                "mode": "Serial",
+                "batchSize": 1
+            },                          
+            "properties": {
+                "addressPrefix": "[concat('10.0.', copyIndex(), '.0/24')]",
+                "delegations": []
+            }
+        }        
+    ]
+}
