@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: tophatsteve/frontend:latest
+          env:
+          - name: PORT
+            value: "80"
+          - name: REVERSE_SERVICE_HOST
+            value: "10.106.166.116"
+          - name: REVERSE_SERVICE_PORT
+            value: "80"
+          - name: CAPITALISE_SERVICE_HOST
+            value: "10.111.224.152"
+          - name: CAPITALISE_SERVICE_PORT
+            value: "80"                                    
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              memory: "10Mi"
+              cpu: "100m"          
+         

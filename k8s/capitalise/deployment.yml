@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: capitalise
+  labels:
+    app: capitalise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capitalise
+  template:
+    metadata:
+      labels:
+        app: capitalise
+    spec:
+      containers:
+        - name: capitalise
+          image: tophatsteve/capitalise:latest
+          env:
+          - name: PORT
+            value: "80"
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              memory: "10Mi"
+              cpu: "100m"          
+         

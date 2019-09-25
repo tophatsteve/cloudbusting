@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: reverse
+  labels:
+    app: reverse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reverse
+  template:
+    metadata:
+      labels:
+        app: reverse
+    spec:
+      containers:
+        - name: reverse
+          image: tophatsteve/reverse:latest
+          env:
+          - name: PORT
+            value: "80"
+          ports:
+          - containerPort: 80
+          resources:
+            limits:
+              memory: "10Mi"
+              cpu: "100m"          
+         
