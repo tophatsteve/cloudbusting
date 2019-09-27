@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: reverse
+  namespace: munge
   labels:
     app: reverse
 spec:

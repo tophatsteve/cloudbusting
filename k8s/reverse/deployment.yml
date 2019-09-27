@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: reverse
+  namespace: munge
   labels:
     app: reverse
 spec:

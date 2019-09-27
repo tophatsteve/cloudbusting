@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: frontend
+  namespace: munge
   labels:
     app: frontend
 spec:
@@ -21,11 +22,11 @@ spec:
           - name: PORT
             value: "80"
           - name: REVERSE_SERVICE_HOST
-            value: "reverse.default.svc.cluster.local"
+            value: "reverse.munge.svc.cluster.local"
           - name: REVERSE_SERVICE_PORT
             value: "80"
           - name: CAPITALISE_SERVICE_HOST
-            value: "capitalise.default.svc.cluster.local"
+            value: "capitalise.munge.svc.cluster.local"
           - name: CAPITALISE_SERVICE_PORT
             value: "80"                                    
           ports:
